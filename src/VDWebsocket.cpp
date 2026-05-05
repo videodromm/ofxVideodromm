@@ -42,21 +42,26 @@ void VDWebsocket::update() {
 void VDWebsocket::wsWrite(const std::string& aMsg) {
 	if (mIsConnected) mClient.send(aMsg);
 }
-
+void VDWebsocket::onConnect(ofxLibwebsockets::Event & args) {
+	ofLogNotice("VDWebsocket") << "on connected" << endl;
+}
 void VDWebsocket::onOpen(ofxLibwebsockets::Event& args) {
 	mIsConnected = true;
 	mWSMsg = "WS opened";
 	ofLogNotice("VDWebsocket") << mWSMsg;
+}
+void VDWebsocket::onIdle(ofxLibwebsockets::Event & args) {
+	ofLogNotice("VDWebsocket") << "on idle";
 }
 void VDWebsocket::onClose(ofxLibwebsockets::Event& args) {
 	mIsConnected = false;
 	mWSMsg = "WS closed";
 	ofLogWarning("VDWebsocket") << mWSMsg;
 }
-void VDWebsocket::onError(ofxLibwebsockets::Event& args) {
-	mWSMsg = "WS error: " + args.message;
-	ofLogError("VDWebsocket") << mWSMsg;
-}
+//void VDWebsocket::onError(ofxLibwebsockets::Event& args) {
+//	mWSMsg = "WS error: " + args.message;
+//	ofLogError("VDWebsocket") << mWSMsg;
+//}
 void VDWebsocket::onMessage(ofxLibwebsockets::Event& args) {
 	parseMessage(args.message);
 }

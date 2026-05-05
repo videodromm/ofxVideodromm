@@ -18,11 +18,11 @@ void VDMidi::setupMidi(VDMediatorObservableRef aVDMediator) {
 
 void VDMidi::midiSetup() {
 	std::stringstream ss;
-	int numPorts = mMidiIn0.getNumPorts();
+	int numPorts = mMidiIn0.getNumInPorts();
 	if (numPorts > 0) {
 		for (int i = 0; i < numPorts; i++) {
 			midiInput mIn;
-			mIn.portName = mMidiIn0.getPortName(i);
+			mIn.portName = mMidiIn0.getInPortName(i);
 			mIn.isConnected = false;
 			bool already = false;
 			for (auto& inp : mMidiInputs) if (inp.portName == mIn.portName) { already = true; break; }
@@ -41,11 +41,11 @@ void VDMidi::midiSetup() {
 	} else {
 		ss << "no midi in ports";
 	}
-	int numOut = mMidiOut0.getNumPorts();
+	int numOut = mMidiOut0.getNumOutPorts();
 	if (numOut > 0) {
 		for (int i = 0; i < numOut; i++) {
 			midiOutput mOut;
-			mOut.portName = mMidiOut0.getPortName(i);
+			mOut.portName = mMidiOut0.getOutPortName(i);
 			mOut.isConnected = false;
 			bool already = false;
 			for (auto& out : mMidiOutputs) if (out.portName == mOut.portName) { already = true; break; }
@@ -74,7 +74,7 @@ void VDMidi::saveMidiPorts() {
 }
 
 void VDMidi::openMidiInPort(int i) {
-	if (i < mMidiIn0.getNumPorts()) {
+	if (i < mMidiIn0.getNumInPorts()) {
 		if (i == 0) { mMidiIn0.openPort(i); mMidiIn0.addListener(this); }
 		else if (i == 1) { mMidiIn1.openPort(i); mMidiIn1.addListener(this); }
 		else if (i == 2) { mMidiIn2.openPort(i); mMidiIn2.addListener(this); }

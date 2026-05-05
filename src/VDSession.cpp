@@ -7,6 +7,8 @@ VDSession::VDSession(VDSettingsRef aVDSettings, VDAnimationRef aVDAnimation, VDU
 	mVDAnimation = aVDAnimation;
 	mVDUniforms  = aVDUniforms;
 	mVDMix       = aVDMix;
+	// Params
+	mVDParams = VDParams::create();
 
 	mModesList[0] = "Mixette";
 	mModesList[1] = "Post";
@@ -15,12 +17,12 @@ VDSession::VDSession(VDSettingsRef aVDSettings, VDAnimationRef aVDAnimation, VDU
 
 	// Allocate FBOs
 	ofFbo::Settings fboSettings;
-	fboSettings.width           = mVDSettings->mFboWidth;
-	fboSettings.height          = mVDSettings->mFboHeight;
+	fboSettings.width = mVDParams->getFboWidth();
+	fboSettings.height = mVDParams->getFboHeight();
 	fboSettings.internalformat  = GL_RGBA;
 	fboSettings.numSamples      = 0;
-	fboSettings.useDepthBuffer  = false;
-	fboSettings.useStencilBuffer = false;
+	//fboSettings.useDepthBuffer  = false;
+	//fboSettings.useStencilBuffer = false;
 	mPostFbo.allocate(fboSettings);
 	mFxFbo.allocate(fboSettings);
 
@@ -48,7 +50,9 @@ void VDSession::update() {
 	mVDAnimation->update();
 	mVDMix->getMixetteTexture(0);
 	renderPostToFbo();
-	if (mVDUniforms->getUniformValue(mVDUniforms->IFXVISIBLE) > 0.5f)
+	// if (mVDUniforms->getUniformValue(mVDUniforms->IFXVISIBLE) > 0.5f)
+	// CI	if (mVDUniforms->getUniformValue(mVDUniforms->IDISPLAYMODE) == VDDisplayMode::FX || getElapsedFrames() % 100 == 0) renderFxToFbo();
+
 		renderFxToFbo();
 }
 
@@ -63,11 +67,11 @@ void VDSession::renderPostToFbo() {
 		if (mixTex) mixTex->bind(0);
 		mGlslPost.setUniform1i("tex0", 0);
 		mGlslPost.setUniform1f("iTime",        mVDUniforms->getUniformValue(mVDUniforms->ITIME));
-		mGlslPost.setUniform2f("iResolution",  (float)mVDSettings->mFboWidth, (float)mVDSettings->mFboHeight);
+		mGlslPost.setUniform2f("iResolution",  (float)mVDParams->getFboWidth(), (float)mVDParams->getFboHeight());
 		mGlslPost.setUniform1f("iGlitch",      mVDUniforms->getUniformValue(mVDUniforms->IGLITCH));
 		mGlslPost.setUniform1f("iChromatic",   mVDUniforms->getUniformValue(mVDUniforms->ICHROMATIC));
 		mGlslPost.setUniform1f("iPixelate",    mVDUniforms->getUniformValue(mVDUniforms->IPIXELATE));
-		ofDrawRectangle(0, 0, mVDSettings->mFboWidth, mVDSettings->mFboHeight);
+		ofDrawRectangle(0, 0, mVDParams->getFboWidth(), mVDParams->getFboHeight());
 		if (mixTex) mixTex->unbind();
 		mGlslPost.end();
 	}
@@ -82,8 +86,8 @@ void VDSession::renderFxToFbo() {
 		mPostFbo.getTexture().bind(0);
 		mGlslFx.setUniform1i("tex0", 0);
 		mGlslFx.setUniform1f("iTime", mVDUniforms->getUniformValue(mVDUniforms->ITIME));
-		mGlslFx.setUniform2f("iResolution", (float)mVDSettings->mFboWidth, (float)mVDSettings->mFboHeight);
-		ofDrawRectangle(0, 0, mVDSettings->mFboWidth, mVDSettings->mFboHeight);
+		mGlslFx.setUniform2f("iResolution", (float)mVDParams->getFboWidth(), (float)mVDParams->getFboHeight());
+		ofDrawRectangle(0, 0, mVDParams->getFboWidth(), mVDParams->getFboHeight());
 		mPostFbo.getTexture().unbind();
 		mGlslFx.end();
 	}
@@ -160,7 +164,9 @@ void VDSession::loadFolder(const std::string& folder) {
 	}
 }
 
-void VDSession::save()    { mVDMix->save(); }
+void VDSession::save()    {
+	//mVDMix->save();
+}
 void VDSession::restore() { mVDMix->restore(ofToDataPath(mAssetsFolder + "/mix.json")); }
 
 bool VDSession::handleKeyDown(int key, bool ctrlDown, bool shiftDown, bool altDown) {

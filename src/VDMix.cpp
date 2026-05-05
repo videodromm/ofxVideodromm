@@ -70,10 +70,10 @@ void VDMix::restore(const std::string& aFilePath) {
 	}
 }
 
-unsigned int VDMix::getValidFboIndex(unsigned int aFboIndex) {
-	if (mFboShaderList.empty()) return 0;
-	return std::min(aFboIndex, (unsigned int)mFboShaderList.size() - 1);
-}
+//unsigned int VDMix::getValidFboIndex(unsigned int aFboIndex) {
+//	if (mFboShaderList.empty()) return 0;
+//	return std::min(aFboIndex, (unsigned int)mFboShaderList.size() - 1);
+//}
 
 unsigned int VDMix::createFboShaderTexture(const ofJson& json, unsigned int aFboIndex, const std::string& aFolder) {
 	unsigned int rtn = 0;

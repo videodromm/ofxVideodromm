@@ -145,12 +145,15 @@ namespace videodromm {
 
 		std::string					getMsg()       { return mMsg; }
 		void						setMsg(const std::string& aMsg) { mMsg = aMsg; }
+		std::string					getMode()       { return mMode; }
+		void						setMode(const std::string& aMode) { mMode = aMode; }
 		std::string					getErrorMsg()  { return mErrorMsg; }
 		void						setErrorMsg(const std::string& aMsg) { mErrorMsg = aMsg; }
 
 	private:
 		std::string					settingsFileName;
 		std::string					mMsg;
+		std::string					mMode;
 		std::string					mErrorMsg;
 	};
 }

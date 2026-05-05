@@ -78,15 +78,15 @@ unsigned int VDFboShader::createInputTexture(const ofJson& json) {
 		for (int i = 0; i < mTextureCount; i++) loadNextTexture(i);
 		break;
 	case VDTextureMode::SHARED: {
-#ifdef _WIN32
-		// receive first frame
-		ofTexture tmp;
-		mSpoutIn.receive(tmp);
-		if (tmp.isAllocated()) {
-			mInputTextureList[0].texture = tmp;
-			mInputTextureList[0].name    = "spout";
-		}
-#endif
+//#ifdef _WIN32
+//		// receive first frame
+//		ofTexture tmp;
+//		mSpoutIn.receive(tmp);
+//		if (tmp.isAllocated()) {
+//			mInputTextureList[0].texture = tmp;
+//			mInputTextureList[0].name    = "spout";
+//		}
+//#endif
 		mInputTextureList[0].ms      = 0;
 		mInputTextureList[0].isValid = true;
 		break;
@@ -295,17 +295,17 @@ ofTexture* VDFboShader::getFboTexture() {
 		}
 		break;
 	case VDTextureMode::SHARED:
-#ifdef _WIN32
-		{
-			ofTexture tmp;
-			mSpoutIn.receive(tmp);
-			if (tmp.isAllocated()) {
-				mInputTextureList[0].texture = tmp;
-				mInputTextureList[0].name    = "spout";
-				mInputTextureList[0].isValid = true;
-			}
-		}
-#endif
+//#ifdef _WIN32
+//		{
+//			ofTexture tmp;
+//			mSpoutIn.receive(tmp);
+//			if (tmp.isAllocated()) {
+//				mInputTextureList[0].texture = tmp;
+//				mInputTextureList[0].name    = "spout";
+//				mInputTextureList[0].isValid = true;
+//			}
+//		}
+//#endif
 		break;
 	case VDTextureMode::MOVIE:
 		if (mIsVideoLoaded) {

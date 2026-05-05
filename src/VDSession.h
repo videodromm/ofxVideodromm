@@ -6,6 +6,7 @@
 #include "VDMix.h"
 #include "VDMediator.h"
 #include "VDFboShader.h"
+#include "VDParams.h"
 
 namespace videodromm
 {
@@ -60,10 +61,16 @@ namespace videodromm
 		// Modes
 		std::map<int, std::string>& getModesList() { return mModesList; }
 
-		std::string getMode() { return mVDSettings->getMode(); }
-		void        setMode(const std::string& m) { mVDSettings->setMode(m); }
+		std::string getMode() {
+			return mVDSettings->getMode();
+		}
+		void        setMode(const std::string& m) {
+			mVDSettings->setMode(m);
+		}
 
 	private:
+		// Params
+		VDParamsRef mVDParams;
 		VDSettingsRef mVDSettings;
 		VDAnimationRef mVDAnimation;
 		VDUniformsRef  mVDUniforms;

@@ -12,7 +12,7 @@ namespace videodromm
 	typedef std::shared_ptr<VDMediatorObservable> VDMediatorObservableRef;
 
 	typedef std::shared_ptr<class VDWebsocket> VDWebsocketRef;
-	class VDWebsocket : public ofxLibwebsockets::WebSocketListener {
+	class VDWebsocket  {
 	public:
 		VDWebsocket(VDSettingsRef aVDSettings, VDAnimationRef aVDAnimation, VDUniformsRef aVDUniforms);
 		~VDWebsocket();
@@ -25,11 +25,18 @@ namespace videodromm
 		bool isConnected() { return mIsConnected; }
 		std::string getWSMsg() { return mWSMsg; }
 		// ofxLibwebsockets::WebSocketListener
-		void onOpen   (ofxLibwebsockets::Event& args) override;
-		void onClose  (ofxLibwebsockets::Event& args) override;
-		void onError  (ofxLibwebsockets::Event& args) override;
-		void onMessage(ofxLibwebsockets::Event& args) override;
-		void onBroadcast(ofxLibwebsockets::Event& args) override;
+		//void onOpen   (ofxLibwebsockets::Event& args) override;
+		//void onClose  (ofxLibwebsockets::Event& args) override;
+		//void onError  (ofxLibwebsockets::Event& args) override;
+		//void onMessage(ofxLibwebsockets::Event& args) override;
+		//void onBroadcast(ofxLibwebsockets::Event& args) override;
+		// websocket methods
+		void onConnect(ofxLibwebsockets::Event & args);
+		void onOpen(ofxLibwebsockets::Event & args);
+		void onClose(ofxLibwebsockets::Event & args);
+		void onIdle(ofxLibwebsockets::Event & args);
+		void onMessage(ofxLibwebsockets::Event & args);
+		void onBroadcast(ofxLibwebsockets::Event & args);
 	private:
 		VDSettingsRef           mVDSettings;
 		VDAnimationRef          mVDAnimation;

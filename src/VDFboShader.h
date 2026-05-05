@@ -5,7 +5,7 @@
 #include "VDParams.h"
 
 #ifdef _WIN32
-#include "ofxSpout2.h"
+//#include "ofxSpout2.h"
 #endif
 
 #include <atomic>
@@ -108,7 +108,7 @@ namespace videodromm
 		bool           mUseAudioTexture         = false;
 
 #ifdef _WIN32
-		ofxSpout2::Receiver mSpoutIn;
+		//ofxSpout2::Receiver mSpoutIn;
 #endif
 
 		unsigned int   createInputTexture(const ofJson& json);
