@@ -4,23 +4,17 @@
 
 using namespace std;
 
-namespace VideoDromm
+namespace videodromm
 {
 	// stores the pointer to the VDLog instance
 	typedef std::shared_ptr<class VDLog> VDLogRef;
 
 	class VDLog {
-	public:		
-		VDLog();
-
-		static VDLogRef	create()
-		{
-			return shared_ptr<VDLog>(new VDLog());
-		}
-		void log(string message);
+	public:
+		static VDLogRef create();
+		void log(const string& message);
 	private:
-
+		static VDLogRef LOGGER;
+		VDLog();
 	};
-
-
 }
